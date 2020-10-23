@@ -55,9 +55,12 @@ def read():
         lineParts = line.split(" : ")
         dateParts = lineParts[1].split("/")
         date = datetime.datetime(int(dateParts[0]), int(dateParts[1]), int(dateParts[2]))
-        extra = ""
-        if (date > datetime.datetime.now()):
-            extra = " <- passed"
+        extra = " <- "
+        if (date < datetime.datetime.now()):
+            extra += "passed"
+        else:
+            diff = date - datetime.datetime.now()
+            extra += str(diff.days) + " days"
         print(line.strip() + extra)
     f.close()
 
