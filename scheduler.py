@@ -17,6 +17,7 @@ def getDate():
             year = int(input("Please enter a year: "))
             valid = True
         except:
+            print("Invalid year.")
             continue
     valid = False
     while (valid == False):
@@ -24,6 +25,7 @@ def getDate():
             month = int(input("Please enter a month: "))
             valid = True
         except:
+            print("Invalid month.")
             continue
     valid = False
     while (valid == False):
@@ -31,22 +33,32 @@ def getDate():
             day = int(input("Please enter a day: "))
             valid = True
         except:
+            print("Invalid day.")
             continue
     try:
-        return datetime.datetime(year, month, day)
+        date = datetime.datetime(year, month, day)
+        return str(year) + "/" + str(month) + "/" + str(day)
     except:
+        print("Invalid date.")
         return getDate()
 
 def write():
     f = open("schedule.txt", "a")
     title = getTitle()
-    date = getDate().strftime("%x")
-    f.write(title + ":" + date + "\n")
+    date = getDate()
+    f.write(title + " : " + date + "\n")
     f.close()
 
 def read():
     f = open("schedule.txt", "r")
-    print(f.read())
+    for line in f:
+        lineParts = line.split(" : ")
+        dateParts = lineParts[1].split("/")
+        date = datetime.datetime(int(dateParts[0]), int(dateParts[1]), int(dateParts[2]))
+        extra = ""
+        if (date > datetime.datetime.now()):
+            extra = " <- passed"
+        print(line.strip() + extra)
     f.close()
 
 def clear():
