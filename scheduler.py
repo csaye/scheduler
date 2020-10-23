@@ -49,15 +49,22 @@ def read():
     print(f.read())
     f.close()
 
+def clear():
+    f = open("schedule.txt", "w")
+    f.write("")
+    f.close()
+
 while (running):
     userInput = input("> ")
     if (userInput == "help"):
-        print("Commands: help, quit, write, read")
+        print("Commands: help, quit, write, read, clear")
     elif (userInput == "quit"):
         running = False;
     elif (userInput == "write"):
         write()
     elif (userInput == "read"):
         read()
+    elif (userInput == "clear"):
+        clear()
     else:
         print("Invalid command. Type \"help\" for help.")
